@@ -63,6 +63,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>f1-team-dashboard</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
