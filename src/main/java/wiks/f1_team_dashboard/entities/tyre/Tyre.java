@@ -23,22 +23,21 @@ public class Tyre {
     @Enumerated(EnumType.STRING)
     @Column(name = "position")
     private TyrePosition position;
+    @Enumerated(EnumType.STRING)
     @Column(name = "compound")
-    private String compound;
+    private TyreCompound compound;
     @Column(name = "temperature")
     private double temperature;
     @Column(name = "pressure")
     private double pressure;
     @Column(name = "wear")
     private double wear;
-    @Column(name = "condition")
-    private String condition;
     @Column(name = "is_damaged")
     private boolean isDamaged;
     @Column(name = "is_now_used")
     private boolean isNowUsed;
-    @Column(name = "is_from_current_week")
-    private boolean isFromCurrentWeek;
+    @Column(name = "weekId")
+    private int weekId;
     @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
     @ManyToOne

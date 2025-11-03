@@ -22,6 +22,9 @@ public class Driver {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private DriverStatus status;
     @OneToOne
     @JoinColumn(name = "car_id")
     private Car car;

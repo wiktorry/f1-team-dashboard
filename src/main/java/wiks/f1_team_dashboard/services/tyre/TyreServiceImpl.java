@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import wiks.f1_team_dashboard.entities.car.Car;
 import wiks.f1_team_dashboard.entities.tyre.Tyre;
+import wiks.f1_team_dashboard.entities.tyre.TyreCompound;
 import wiks.f1_team_dashboard.entities.tyre.TyrePosition;
 import wiks.f1_team_dashboard.entities.tyre.TyreSetsRequest;
 import wiks.f1_team_dashboard.repositories.CarRepository;
@@ -30,7 +31,7 @@ public class TyreServiceImpl implements TyreService {
        return tyres;
     }
 
-    private List<Tyre> addTyreSetsByCompound(String compound, int carId, int numberOfSets) {
+    private List<Tyre> addTyreSetsByCompound(TyreCompound compound, int carId, int numberOfSets) {
         List<Tyre> tyres = new ArrayList<>();
         for (int i = 0; i < numberOfSets; i++) {
             tyres.add(addTyre(compound, carId, TyrePosition.FRONT_LEFT));
@@ -41,7 +42,7 @@ public class TyreServiceImpl implements TyreService {
         return tyres;
     }
 
-    private Tyre addTyre(String compound, int carId, TyrePosition position) {
+    private Tyre addTyre(TyreCompound compound, int carId, TyrePosition position) {
         Car car = carRepository.findById(carId).orElseThrow();
         Tyre tyre = new Tyre(
                 0,
@@ -50,10 +51,9 @@ public class TyreServiceImpl implements TyreService {
                 0,
                 0,
                 0,
-                "FRESH",
                 false,
                 false,
-                true,
+                0,
                 LocalDateTime.now(),
                 car
         );
