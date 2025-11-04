@@ -7,6 +7,7 @@ import wiks.f1_team_dashboard.entities.tyre.Tyre;
 import wiks.f1_team_dashboard.entities.tyre.TyreCompound;
 import wiks.f1_team_dashboard.entities.tyre.TyrePosition;
 import wiks.f1_team_dashboard.entities.tyre.TyreSetsRequest;
+import wiks.f1_team_dashboard.exceptions.NotFoundException;
 import wiks.f1_team_dashboard.repositories.CarRepository;
 import wiks.f1_team_dashboard.repositories.TyreRepository;
 
@@ -22,13 +23,13 @@ public class TyreServiceImpl implements TyreService {
 
     @Override
     public List<Tyre> addTyreSets(TyreSetsRequest request) {
-       List<Tyre> tyres = new ArrayList<>();
-       request.tyreSets().forEach(
-               tyreSet ->
-                       tyres.addAll(addTyreSetsByCompound(tyreSet.compound(),
-                               tyreSet.numberOfSets(), request.carId()))
-       );
-       return tyres;
+        List<Tyre> tyres = new ArrayList<>();
+        request.tyreSets().forEach(
+                tyreSet ->
+                        tyres.addAll(addTyreSetsByCompound(tyreSet.compound(),
+                                tyreSet.numberOfSets(), request.carId()))
+        );
+        return tyres;
     }
 
     private List<Tyre> addTyreSetsByCompound(TyreCompound compound, int carId, int numberOfSets) {
@@ -43,7 +44,8 @@ public class TyreServiceImpl implements TyreService {
     }
 
     private Tyre addTyre(TyreCompound compound, int carId, TyrePosition position) {
-        Car car = carRepository.findById(carId).orElseThrow();
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new NotFoundException("Car not found"));
         Tyre tyre = new Tyre(
                 0,
                 position,
