@@ -2,10 +2,13 @@ package wiks.f1_team_dashboard.services.driver;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import wiks.f1_team_dashboard.entities.car.Car;
 import wiks.f1_team_dashboard.entities.driver.Driver;
+import wiks.f1_team_dashboard.entities.driver.DriverAssignCarRequest;
 import wiks.f1_team_dashboard.entities.driver.DriverCreateRequest;
 import wiks.f1_team_dashboard.entities.driver.DriverStatus;
 import wiks.f1_team_dashboard.exceptions.BadRequestException;
+import wiks.f1_team_dashboard.repositories.CarRepository;
 import wiks.f1_team_dashboard.repositories.DriverRepository;
 
 
@@ -13,6 +16,7 @@ import wiks.f1_team_dashboard.repositories.DriverRepository;
 @RequiredArgsConstructor
 public class DriverServiceImpl implements DriverService {
     private final DriverRepository driverRepository;
+    private final CarRepository carRepository;
 
     @Override
     public Driver addDriver(DriverCreateRequest driverRequest) {
@@ -27,6 +31,17 @@ public class DriverServiceImpl implements DriverService {
                 driverRequest.status(),
                 null
         );
+        return driverRepository.save(driver);
+    }
+
+    @Override
+    public Driver assignCar(DriverAssignCarRequest driverAssignCarRequest) {
+        Driver driver = driverRepository.findById(driverAssignCarRequest.driverId())
+                .orElseThrow(() -> new BadRequestException("Driver not found"));
+        Car car = carRepository.findById(driverAssignCarRequest.carId())
+                .orElseThrow(() -> new BadRequestException("Car not found"));
+        driver.setCar(car);
+        car.setDriver(driver);
         return driverRepository.save(driver);
     }
 }
