@@ -36,8 +36,8 @@ public class Tyre {
     private boolean isDamaged;
     @Column(name = "is_now_used")
     private boolean isNowUsed;
-    @Column(name = "weekId")
-    private int weekId;
+    @Column(name = "round_id")
+    private int roundId;
     @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
     @ManyToOne
