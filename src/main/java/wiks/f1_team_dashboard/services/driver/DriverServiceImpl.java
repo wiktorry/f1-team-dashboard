@@ -8,6 +8,7 @@ import wiks.f1_team_dashboard.entities.driver.DriverAssignCarRequest;
 import wiks.f1_team_dashboard.entities.driver.DriverCreateRequest;
 import wiks.f1_team_dashboard.entities.driver.DriverStatus;
 import wiks.f1_team_dashboard.exceptions.BadRequestException;
+import wiks.f1_team_dashboard.exceptions.NotFoundException;
 import wiks.f1_team_dashboard.repositories.CarRepository;
 import wiks.f1_team_dashboard.repositories.DriverRepository;
 
@@ -37,9 +38,9 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public Driver assignCar(DriverAssignCarRequest driverAssignCarRequest) {
         Driver driver = driverRepository.findById(driverAssignCarRequest.driverId())
-                .orElseThrow(() -> new BadRequestException("Driver not found"));
+                .orElseThrow(() -> new NotFoundException("Driver not found"));
         Car car = carRepository.findById(driverAssignCarRequest.carId())
-                .orElseThrow(() -> new BadRequestException("Car not found"));
+                .orElseThrow(() -> new NotFoundException("Car not found"));
         driver.setCar(car);
         car.setDriver(driver);
         return driverRepository.save(driver);
