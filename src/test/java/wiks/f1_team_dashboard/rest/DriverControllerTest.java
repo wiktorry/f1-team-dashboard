@@ -43,7 +43,8 @@ public class DriverControllerTest {
 
     @AfterEach
     public void tearDown() {
-        driverRepository.deleteAll();
+        driverRepository.deleteAllInBatch();
+        carRepository.deleteAllInBatch();
     }
 
     @Test

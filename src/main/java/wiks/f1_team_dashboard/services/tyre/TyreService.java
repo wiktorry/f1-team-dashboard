@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TyreService {
     List<Tyre> addTyreSets(TyreSets request);
+
+    List<Tyre> changeActiveTyreSet(List<Integer> tyreIds);
 }

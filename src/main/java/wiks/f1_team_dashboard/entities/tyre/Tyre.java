@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.LastModifiedDate;
 import wiks.f1_team_dashboard.entities.car.Car;
 
 import java.time.LocalDateTime;
@@ -38,6 +39,7 @@ public class Tyre {
     private boolean isNowUsed;
     @Column(name = "round_id")
     private int roundId;
+    @LastModifiedDate
     @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
     @ManyToOne
